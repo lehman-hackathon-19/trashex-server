@@ -15,20 +15,21 @@ router.get("/:id", function(req, res, next) {
 });
 
 router.put("/:id", async function(req, res, next) {
-  const existing = (await  User.findOne({ _id: req.params.id }));
+  const existing = await User.findOne({ _id: req.params.id });
   console.log(existing);
   try {
     existing.totalCount = existing.totalCount + req.body.totalCount;
     console.log(req.body);
-    const existingUser = await User.findByIdAndUpdate({ _id: req.params.id }, req.body);
+    const existingUser = await User.findByIdAndUpdate(
+      { _id: req.params.id },
+      req.body
+    );
     existingUser.set(existing);
     const result = await existingUser.save();
-    res.send(result)
+    res.send(result);
   } catch (err) {
     next(err);
   }
-
-  
 });
 
 module.exports = router;
