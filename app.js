@@ -2,19 +2,24 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+const cookieSession = require("cookie-session");
+const passport = require("passport");
 var logger = require('morgan');
 var cors = require('cors');
-var app = express();
 var bodyparser = require("body-parser");
 var mongoose = require('mongoose');
+const keys = require("./config/keys");
+require("./models/User");
+require("./services/passport");
 
+const app = express();
 app.use(cors());
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var apiRouter = require('./routes/api');
 
-mongoose.connect("mongodb+srv://bentbyi:munky330@cluster0-wheay.gcp.mongodb.net/test?retryWrites=true&w=majority", {
+mongoose.connect(keys.mongoURI, {
   useNewUrlParser: true
 });
 
@@ -33,6 +38,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/api', apiRouter);
+
+app.use(
+  cookieSession({
+    maxAge: 30 * 24 * 60 * 60 * 1000,
+    keys: [keys.cookieKey]
+  })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+require("./routes/authRoutes")(app);
 
 // error handler
 app.use(function(err, req, res, next) {
