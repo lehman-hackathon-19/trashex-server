@@ -5,7 +5,7 @@ var Pickup = require("../models/pickupSchema");
 /* GET home page. */
 
 router.get('/', async (req, res, next) => {
-  res.send('THE TRESH IS HEA');
+  res.send('Hello world!');
 });
 
 router.get('/pickups', async (req, res, next) => {
@@ -26,9 +26,10 @@ router.delete('/pickups/delete/:id', async (req, res, next) => {
 
 router.post('/pickups', async (req, res, next) => {
   var pu = new Pickup();
+  console.log(req);
   pu.save(function(err) {
     if (err) res.send(err);
-    res.send({message: 'Pickup created at your moms house!'})
+    res.send({message: 'New location created for pickup!'})
   });
 });
 

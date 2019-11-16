@@ -4,7 +4,7 @@ var Schema = mongoose.Schema;
 var PickupSchema = new Schema({
   name: {
     type: String,
-    default: "Your moms house"
+    default: "Default Location"
   },
   location: {
     type: [Number],
