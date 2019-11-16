@@ -26,10 +26,8 @@ router.delete('/pickups/delete/:id', async (req, res, next) => {
 
 router.post('/pickups', async (req, res, next) => {
   var pu = new Pickup();
-  pu.items = res.body.items;
   pu.save(function(err) {
     if (err) res.send(err);
-    console.log('ASODKASDOKASDOKADSOK');
     res.send({message: 'Pickup created at your moms house!'})
   });
 });
