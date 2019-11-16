@@ -31,7 +31,12 @@ passport.use(
       // No existing record with given profile ID, continue to create new record
       const user = await new User({
         googleId: profile.id,
-        name: profile.displayName
+        name: profile.displayName,
+        points: 0,
+        plasticCount: 0,
+        glassCount: 0,
+        metalCount: 0,
+        totalCount: 0
       }).save();
       done(null, user);
     }
