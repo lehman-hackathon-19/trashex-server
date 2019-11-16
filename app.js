@@ -1,3 +1,6 @@
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -19,7 +22,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var apiRouter = require('./routes/api');
 
-mongoose.connect(keys.mongoURI, {
+mongoose.connect(process.env.mongoURI, {
   useNewUrlParser: true
 });
 
@@ -42,7 +45,7 @@ app.use('/api', apiRouter);
 app.use(
   cookieSession({
     maxAge: 30 * 24 * 60 * 60 * 1000,
-    keys: [keys.cookieKey]
+    keys: [process.env.cookieKey]
   })
 );
 
