@@ -1,21 +1,28 @@
 var express = require('express');
 var router = express.Router();
+var Pickup = require("../models/pickupSchema");
 
 /* GET home page. */
-router.get('/pickups', function(req, res, next) {
-  Pickup.find(function(err, pickups) {
-    if (err) res.send(err)
-    res.json(pickups);
-  });
-  res.send("THE TRASH IS HERE");
+
+router.get('/', async (req, res, next) => {
+  res.send('THE TRESH IS HEA');
 });
 
-router.post('/pickups', function(req, res, next) {
-  var pickup = new Pickup();
-  Pickup.location = "Your moms house";
-  Pickup.save(function(err) {
+router.get('/pickups', async (req, res, next) => {
+  Pickup.find(function(err, pickups) {
+    if (err) {
+      res.send(err)
+    }
+    res.json(pickups);
+  });
+});
+
+router.post('/pickups', async (req, res, next) => {
+  var pu = new Pickup();
+  pu.save(function(err) {
     if (err) res.send(err);
-    res.json({message: 'Pickup created at your moms house!'})
+    console.log('ASODKASDOKASDOKADSOK');
+    res.send({message: 'Pickup created at your moms house!'})
   });
 });
 
