@@ -11,7 +11,6 @@ var logger = require('morgan');
 var cors = require('cors');
 var bodyparser = require("body-parser");
 var mongoose = require('mongoose');
-const keys = require("./config/keys");
 require("./models/User");
 require("./services/passport");
 
