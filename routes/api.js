@@ -17,8 +17,16 @@ router.get('/pickups', async (req, res, next) => {
   });
 });
 
+router.delete('/pickups/delete/:id', async (req, res, next) => {
+  Pickup.findByIdAndRemove(req.params.id, (err, pickup) => {
+    if (err) res.send(err)
+    res.send({message: "Picked up!"});
+  });
+});
+
 router.post('/pickups', async (req, res, next) => {
   var pu = new Pickup();
+  pu.items = res.body.items;
   pu.save(function(err) {
     if (err) res.send(err);
     console.log('ASODKASDOKASDOKADSOK');
